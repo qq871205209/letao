@@ -6,6 +6,7 @@ $(function(){
     });
     /*初始化 区域滚动组件*/
     mui('.mui-scroll-wrapper').scroll({
+        //去掉滚动条的配置项
         indicators:false
     });
 });

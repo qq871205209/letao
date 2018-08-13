@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/mui/css/mui.min.css">
     <link rel="stylesheet" href="assets/fontAwesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/search.css">
     <link rel="stylesheet" href="css/searchList.css">
 </head>
 <body>
@@ -39,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div class="lt_tabs">
+    <div class="lt_footTab">
         <a href="index.html"><span class="fa fa-home"></span><p>首页</p></a>
         <a href="category.html"><span class="fa fa-bars"></span><p>分类</p></a>
         <a href="user/cart.html"><span class="fa fa-shopping-cart"></span><p>购物车</p></a>
@@ -58,7 +59,7 @@
                     }
                 %>
                 <img class="img" onerror="this.src='images/none01.jpg'" src="{{picAddr}}" alt="">
-                <p class="name mui-ellipsis-2">{{$value.proName}}</p>
+                <p class="describe mui-ellipsis-2">{{$value.proName}}</p>
                 <p>
                     <span class="nowPrice">&yen;{{$value.price}}</span>
                     <span class="oldPrice">&yen;{{$value.oldPrice}}</span>

@@ -1,78 +1,86 @@
 $(function(){
-    /*1.页面初始渲染*/
-    /*1.1 去加载顶级分类的数据*/
-    /*1.2 去完成左侧栏的渲染*/
-    /*1.3 根据左侧栏的第一个分类去查询它对应的品牌分类数据*/
-    /*1.4 去完成右侧品牌分类渲染*/
-
-    /*2.点击顶级分类去渲染右侧的品牌分类*/
-    /*2.1 去选中当前点击的分类*/
-    /*2.2 根据点击的分类去查询它对应的品牌分类数据*/
-    /*2.3 去完成右侧品牌分类渲染*/
-
-    new App();
-
-    /*测试*/
+  //需求分析
+  /**
+   * 1.默认渲染一级分类和二级分类
+   *  1.1先获取一级分类数据
+   *  1.2渲染左侧分类
+   *  1.3同时获取第一个一级分类,并根据这个分类去查询二级分类的数据
+   *  1.4渲染右侧分类
+   * 2.点击左侧分类  进行右侧分类数据的渲染
+   *  2.1.左侧栏的切换
+   *  2.2.进行右侧栏的渲染
+   *  2.3.进行右侧栏渲染的时候要注意:①有没有数据②图片不正确
+   */
+  new App ();
 });
-/*网页业务对象*/
-var App = function(){
-    this.$left = $('.lt_cateLeft');
-    this.$right = $('.lt_cateRight');
-    this.init();
+/**构造函数
+ * 页面程序App
+ */
+var App = function () {
+  this.$top = $('.lt_cateLeft');
+  this.$second = $('.lt_cateRight');
+  //对象属性
+  this.init();
 };
-App.prototype.init = function () {
+/**
+ * 原型方法
+ */
+App.prototype = {
+  //初始化  入口函数
+  init:function(){
+    this.rander();
+    this.bindEvent();
+  },
+  //渲染
+  rander:function(data){
     var that = this;
-    /*页面初始渲染*/
-    that.renderLeft(function (id) {
-        that.renderRight(id);
+    that.randerTop(function(data){
+      that.randerSecond(data.rows[0].id);
     });
-    /*点击顶级分类去渲染右侧的品牌分类*/
-    that.bindEvent();
-};
-App.prototype.bindEvent = function () {
+  },
+  //渲染一级分类
+  randerTop:function(callback){
     var that = this;
-    //mui给你封装了tap
-    that.$left.on('tap','li a',function(){
-        that.$left.find('li').removeClass('now');
-        $(this).parent().addClass('now');
-        //获取当前点击的分类的ID  去查询
-        //that.renderRight($(this)[0].dataset.id);
-        that.renderRight($(this).data('id'))
-    });
-};
-App.prototype.renderLeft = function (callback) {
-    var that = this;
+    //获取数据
     $.ajax({
-        url:'/category/queryTopCategory',
-        type:'get',
-        data:'',
-        dataType:'json',
-        success:function (data) {
-            /*渲染*/
-            /*1. 准备数据*/
-            /*2. 准备模板*/
-            /*3. 通过模板插件的方法 数据+模板 转化成HTML字符串*/
-            // 传入一个对象  在模板内 可以取到对象的属性为变量的数据
-            that.$left.html(template('leftTpl',data));
-            /*一级分类的第一条数据的ID*/
-            var id = data.rows[0].id;
-            //业务分离
-            callback && callback(id);
-        }
+      type:'get',
+      url:'/category/queryTopCategory',
+      data:'',
+      dataType:'json',
+      success:function(data){
+        //模板渲染
+        that.$top.html(template('top',data));
+        callback && callback(data);
+      }
     });
-};
-App.prototype.renderRight = function (id) {
+    //进行渲染
+  },
+  //渲染二级分类
+  randerSecond:function (topId){
     var that = this;
+    //获取数据
     $.ajax({
-        url:'/category/querySecondCategory',
-        type:'get',
-        data:{
-            id:id
-        },
-        dataTye:'json',
-        success:function (data) {
-            /*渲染*/
-            that.$right.html(template('rightTpl',data));
-        }
+      type:'get',
+      url:'/category/querySecondCategory',
+      data:{id:topId},
+      dataType:'json',
+      success:function(data){
+        !data.rows.length && mui.toast('没有品牌数据');
+        //模板渲染
+        that.$second.html(template('second',data));
+      }
     });
+    //渲染模板
+  },
+  //绑定事件
+  bindEvent:function () {
+    //左侧点击事件    移动端的点击事件是tap
+    var that = this;
+    that.$top.on('tap','li a',function(){
+      //点击后修改左侧的样式
+      $(this).parent('li').addClass('active').siblings('li').removeClass('active');
+      that.randerSecond(this.dataset.id);
+    });
+  }
+
 };

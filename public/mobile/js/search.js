@@ -9,7 +9,7 @@ var App = function () {
     this.$history = $('.lt_history');
     this.$search = $('.lt_search');
     //自己去约定 localStorage 的 key 对应的数据格式  json ["","",""]
-    this.KEY = 'letaoHistoryHeima47';
+    this.KEY = 'hm49';
     this.list = JSON.parse(localStorage.getItem(this.KEY) || '[]');
 
     this.init();
@@ -42,7 +42,7 @@ App.prototype.bindEvent = function () {
 };
 App.prototype.render = function () {
     //在模板内 可以直接使用你传入的数据 默认的变量名称 $data
-    this.$history.html(template('list', {list:this.list,euc:encodeURIComponent}));
+    this.$history.html(template('list', {list:this.list,ec:encodeURIComponent}));
 };
 App.prototype.pushHistory = function (value) {
     /*追加历史*/

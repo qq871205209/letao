@@ -6,15 +6,15 @@
     <title>传智电商-搜索中心</title>
     <link rel="stylesheet" href="assets/mui/css/mui.min.css">
     <link rel="stylesheet" href="assets/fontAwesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
 <div class="lt_container">
-    <div class="lt_topBar">
-        <a href="javascript:history.back();" class="left"><span class="fa fa-chevron-left"></span></a>
-        <h3>搜索中心</h3>
-    </div>
+        <div class="lt_topBar">
+                <a class="left" href="javascript:history.back();" ><span class="fa fa-chevron-left"></span></a>
+                <h3>搜索中心</h3>
+        </div>
     <div class="lt_wrapper">
         <div class="lt_content">
             <!--搜索框-->
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="lt_tabs">
+    <div class="lt_footTab">
         <a href="index.html"><span class="fa fa-home"></span><p>首页</p></a>
         <a href="category.html"><span class="fa fa-bars"></span><p>分类</p></a>
         <a href="user/cart.html"><span class="fa fa-shopping-cart"></span><p>购物车</p></a>
@@ -43,7 +43,7 @@
     </div>
     <ul class="con">
         <% for(var i = list.length-1; i >= 0 ; i --){%>
-        <li><a href="searchList.html?key=<%=euc(list[i])%>"><%=list[i]%></a><span data-index="<%=i%>" class="fa fa-close"></span></li>
+        <li><a href="searchList.html?key=<%=ec(list[i])%>"><%=list[i]%></a><span data-index="<%=i%>" class="fa fa-close"></span></li>
         <% } %>
     </ul>
     {{else}}
