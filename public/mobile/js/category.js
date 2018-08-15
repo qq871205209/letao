@@ -32,7 +32,7 @@ App.prototype = {
     this.bindEvent();
   },
   //渲染
-  rander:function(data){
+  rander:function(){
     var that = this;
     that.randerTop(function(data){
       that.randerSecond(data.rows[0].id);
